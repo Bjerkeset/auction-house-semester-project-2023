@@ -1,4 +1,5 @@
 "use server";
+import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 
 const baseURL = "https://api.noroff.dev/api/v1";
@@ -89,11 +90,6 @@ export async function loginUser(loginData: LoginData): Promise<LoginResponse> {
 
     const responseData: LoginResponse = await response.json();
 
-    // // Store the accessToken in local storage
-    // if (responseData.accessToken) {
-    //   localStorage.setItem("authToken", responseData.accessToken);
-    // }
-
     cookies().set("accessToken", responseData.accessToken);
     cookies().set("username", responseData.name);
 
@@ -126,10 +122,16 @@ export async function getUserProfile({
     }
 
     const responseData: UserProfileResponse = await response.json();
-    console.log("User profile retrieved successfully:", responseData);
+    // console.log("User profile retrieved successfully:", responseData);
     return responseData;
   } catch (error) {
     console.error("Error during fetching user profile:", error);
     throw error;
   }
+}
+
+export async function logoutUser() {
+  cookies().delete("accessToken");
+  cookies().delete("username");
+  revalidatePath("/");
 }

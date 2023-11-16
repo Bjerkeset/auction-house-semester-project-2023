@@ -26,7 +26,7 @@ export default function Topbar() {
           </Link>
         </Button>
       </div>
-      <div className="flex w-1/6">
+      <div className="flex">
         <AuthButton />
       </div>
     </nav>
