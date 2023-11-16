@@ -63,13 +63,15 @@ export default function RegisterForm() {
       return;
     }
 
+    let firstTwoCharsOfName = data.name.substring(0, 2);
+
     try {
       // Register the user
       await registerUser({
         email: data.email,
         name: data.name,
         password: data.password,
-        avatar: "https://ui-avatars.com/api/?name=John+Doe", // Optional
+        avatar: `https://ui-avatars.com/api/?name=${firstTwoCharsOfName}`, // Optional
       });
 
       // After successful registration, log the user in
