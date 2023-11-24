@@ -32,7 +32,7 @@ export default function UserDropdownMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52">
         <DropdownMenuLabel className="flex justify-between items-center text-center">
-          Credits: <p className="text-base text-green-500">{credits} $</p>
+          Balance: <p className="text-base text-green-500">{credits} $</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>

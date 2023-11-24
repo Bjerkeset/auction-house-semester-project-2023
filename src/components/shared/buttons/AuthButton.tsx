@@ -1,8 +1,7 @@
-import {Button} from "@/components/ui/button";
 import {getUserProfile} from "@/lib/api";
 import {cookies} from "next/headers";
-import Link from "next/link";
 import UserDropdownMenu from "../navigation/sub/UserDropdownMenu";
+import SigninButton from "./sub/SigninButton";
 
 export default async function AuthButton() {
   const tokenCookieObject = cookies().get("accessToken");
@@ -28,10 +27,6 @@ export default async function AuthButton() {
       );
     }
   } else {
-    return (
-      <Link href="./auth">
-        <Button className="ml-auto">Sign-in</Button>
-      </Link>
-    );
+    return <SigninButton />;
   }
 }

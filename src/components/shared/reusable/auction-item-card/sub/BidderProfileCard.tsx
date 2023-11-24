@@ -1,0 +1,52 @@
+// import {CalendarIcon} from "@radix-ui/react-icons";
+
+import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
+import {Button} from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
+type Props = {
+  profilename: string;
+  avatar: string;
+  email: string;
+  credits: number;
+};
+
+export function BidderProfileCard({
+  profilename,
+  avatar,
+  email,
+  credits,
+}: Props) {
+  return (
+    <HoverCard>
+      <HoverCardTrigger
+        asChild
+        className=" flex items-center justify-center text-center"
+      >
+        <Button variant="link">{profilename}</Button>
+      </HoverCardTrigger>
+      <HoverCardContent className="w-full">
+        <div className="flex justify-between space-x-4">
+          <Avatar>
+            <AvatarImage src={avatar} />
+            <AvatarFallback>WB</AvatarFallback>
+          </Avatar>
+          <div className="space-y-1">
+            <h4 className="text-sm font-semibold">{profilename}</h4>
+            <p className="text-sm">{email}</p>
+            <div className="flex items-center pt-2">
+              {/* <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "} */}
+              <span className="text-xs text-muted-foreground">
+                Balance: {credits} $
+              </span>
+            </div>
+          </div>
+        </div>
+      </HoverCardContent>
+    </HoverCard>
+  );
+}
