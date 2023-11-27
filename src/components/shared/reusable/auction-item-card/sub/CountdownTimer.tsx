@@ -28,6 +28,8 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
     return null;
   };
 
+  const formatTime = (value: number) => value.toString().padStart(2, "0");
+
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(
     calculateTimeLeft()
   );
@@ -42,24 +44,26 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
 
   // Checking if timeLeft is not null before rendering the countdown
   return (
-    <>
+    <div>
       {timeLeft === null ? (
         <span>Time's up!</span>
       ) : (
-        <div className="flex border gap-1">
+        <div className="flex gap-1">
           {Object.entries(timeLeft).map(([interval, value]) => (
-            <div className="flex p-2 w-1/4 flex-col justify-center items-center">
-              <span className="" key={interval}>
-                {value}
-              </span>
-              <span className="text-muted-foreground text-sm">
-                {/* Capitalize first letter */}
-                {interval.charAt(0).toUpperCase() + interval.slice(1)}
-              </span>
+            <div
+              key={interval}
+              className="flex p-2 w-1/4 flex-col justify-center items-center"
+            >
+              <time>
+                <span className="">{formatTime(value)}</span>
+                <span className="text-muted-foreground text-sm">
+                  {interval.charAt(0).toUpperCase() + interval.slice(1)}
+                </span>
+              </time>
             </div>
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

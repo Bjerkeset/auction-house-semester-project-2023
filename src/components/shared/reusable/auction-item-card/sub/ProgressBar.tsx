@@ -21,8 +21,8 @@ export default function ProgressBar({endsAt, created}: ProgressBarProps) {
   };
 
   return (
-    <div className="flex justify-center w-full">
-      <Progress className="w-2/3 h-1" value={calculatePercentage()} />
+    <div className="flex justify-center w-full ">
+      <Progress className=" h-0.5" value={calculatePercentage()} />
     </div>
   );
 }

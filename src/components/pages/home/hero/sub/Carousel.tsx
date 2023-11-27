@@ -6,7 +6,7 @@ export default function Carousel() {
   return (
     <div className="flex gap-4">
       {images.map((image) => (
-        <div className=" w-[200px]">
+        <div key={image.id} className=" w-[200px]">
           <AspectRatio ratio={2 / 3}>
             <Image
               src={image.src}

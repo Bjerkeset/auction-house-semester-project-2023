@@ -264,3 +264,39 @@ export async function createListing(
     throw error;
   }
 }
+
+const tokenCookieObject = cookies().get("accessToken");
+const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+
+export async function bidOnListing(
+  listingId: string,
+  bidAmount: number
+  // accessToken: string
+): Promise<ListingResponse> {
+  try {
+    const response = await fetch(
+      `${baseURL}/auction/listings/${listingId}/bids`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({amount: bidAmount}),
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse: ErrorResponse = await response.json();
+      const errorMessage =
+        errorResponse.errors?.[0]?.message || "Failed to place bid";
+      throw new Error(errorMessage);
+    }
+    const responseData: ListingResponse = await response.json();
+    console.log("Bid placed successfully:", responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error during bidding on listing:", error);
+    throw error;
+  }
+}

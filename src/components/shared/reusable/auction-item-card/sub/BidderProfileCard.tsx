@@ -27,7 +27,13 @@ export function BidderProfileCard({
         asChild
         className=" flex items-center justify-center text-center"
       >
-        <Button variant="link">{profilename}</Button>
+        {/* <Button variant="link">{profilename}</Button> */}
+        <Button variant="link">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={avatar} />
+            <AvatarFallback>WB</AvatarFallback>
+          </Avatar>
+        </Button>
       </HoverCardTrigger>
       <HoverCardContent className="w-full">
         <div className="flex justify-between space-x-4">

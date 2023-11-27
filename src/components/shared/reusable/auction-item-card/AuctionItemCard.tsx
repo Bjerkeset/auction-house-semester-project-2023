@@ -4,9 +4,11 @@ import CountdownTimer from "./sub/CountdownTimer";
 import ProgressBar from "./sub/ProgressBar";
 import {Noto_Serif_Display} from "next/font/google";
 import ImageCarousel from "./sub/ImageCarousel";
-import AuctionBids from "./sub/AuctionBids";
+import AuctionBidsList from "./sub/AuctionBidsList";
 import {getTimeDifference} from "@/lib/utils";
 import CreatedAtDate from "./sub/CreatedAtDate";
+import BidSubmit from "./sub/BidSubmit";
+import AuctionItemDescription from "./sub/AuctionItemDescription";
 
 type AuctionItemCardProps = {
   item: MarketItem;
@@ -15,18 +17,23 @@ type AuctionItemCardProps = {
 const NotoSerif = Noto_Serif_Display({subsets: ["latin"]});
 
 export default function AuctionItemCard({item}: AuctionItemCardProps) {
-  // console.log("item:", item);
-  let latestBid;
-  if (item.bids && item.bids.length > 0) {
-    latestBid = item.bids[item.bids.length - 1];
-  }
+  // Sort bids by amount in descending order
+  const sortedBids = item.bids
+    ? [...item.bids].sort((a, b) => b.amount - a.amount)
+    : [];
+
+  // Get the highest bid, if available
+  const highestBid = sortedBids.length > 0 ? sortedBids[0] : null;
+
+  // Now reverse the sorted array for display
+  const sortedAndReversedBids = [...sortedBids].reverse();
   //${NotoSerif.className}
   return (
     <article
-      className={` flex flex-col-reverse justify-end lg:flex-row-reverse p-4 gap-4 border w-[1000px]`}
+      className={` flex flex-col-reverse justify-end lg:flex-row-reverse p-4 gap-4 border w-[1000px] max-h-[600px]`}
     >
       <div className="flex flex-col w-full">
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <div className="flex justify-between w-full">
             <h2 className="text-4xl font-bold">{item.title.toUpperCase()}</h2>
             <ProfileAvatar
@@ -35,17 +42,23 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
             />
           </div>
           <div className="flex flex-col h-full gap-2">
-            <p className="text-muted-foreground  h-full">{item.description}</p>
-            <div className="flex justify-end">
-              <CreatedAtDate createdAt={item.created} />
-            </div>
+            <AuctionItemDescription description={item.description} />
+            <CreatedAtDate createdAt={item.created} />
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2 h-3/4 ">
-          <CountdownTimer endsAt={item.endsAt} />
-          <ProgressBar endsAt={item.endsAt} created={item.created} />
-          <p className="text-lg">Current Ask: {latestBid?.amount} $ </p>
-          <AuctionBids bids={item.bids || []} />
+        <div className="flex flex-col items-center justify-between h-3/4  ">
+          <div className="flex w-full flex-col gap-1 items-center pb-3">
+            <span className="text-2xl text-green-400">
+              {highestBid?.amount || 0} $
+            </span>
+            <CountdownTimer endsAt={item.endsAt} />
+            <ProgressBar endsAt={item.endsAt} created={item.created} />
+          </div>
+          <AuctionBidsList bids={sortedAndReversedBids} />
+          <BidSubmit
+            currentPrice={highestBid?.amount || 0}
+            listingId={item.id}
+          />
         </div>
       </div>
       <div className="bg-slate-950">

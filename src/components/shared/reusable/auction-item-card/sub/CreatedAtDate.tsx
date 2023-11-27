@@ -14,22 +14,24 @@ export default function CreatedAtDate({createdAt}: Props) {
   const createdAtDate = new Date(createdAt);
   const readableDate = createdAtDate.toLocaleString();
   return (
-    <HoverCard>
-      <HoverCardTrigger
-        asChild
-        className=" flex items-center justify-center text-center"
-      >
-        <Button className="text-secondary-foreground" variant="link">
-          <p className="">
-            {createdAt
-              ? "Created: " + getTimeDifference(createdAt) + " ago"
-              : "N/A"}
-          </p>
-        </Button>
-      </HoverCardTrigger>
-      <HoverCardContent className="w-full">
-        <p> {readableDate} </p>
-      </HoverCardContent>
-    </HoverCard>
+    <div className="flex justify-end">
+      <HoverCard>
+        <HoverCardTrigger
+          asChild
+          className=" flex items-center justify-center text-center"
+        >
+          <Button className="text-secondary-foreground" variant="link">
+            <p className="text-muted-foreground">
+              {createdAt
+                ? "Created: " + getTimeDifference(createdAt) + " ago"
+                : "N/A"}
+            </p>
+          </Button>
+        </HoverCardTrigger>
+        <HoverCardContent className="w-full">
+          <p> Created At: {readableDate} </p>
+        </HoverCardContent>
+      </HoverCard>
+    </div>
   );
 }
