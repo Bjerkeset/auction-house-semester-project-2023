@@ -7,7 +7,7 @@ import ImageCarousel from "./sub/ImageCarousel";
 import AuctionBidsList from "./sub/AuctionBidsList";
 import {getTimeDifference} from "@/lib/utils";
 import CreatedAtDate from "./sub/CreatedAtDate";
-import BidSubmit from "./sub/BidSubmit";
+import BidSubmit from "./sub/BidSubmitForm";
 import AuctionItemDescription from "./sub/AuctionItemDescription";
 import DeleteButton from "./sub/DeleteButton";
 import {cookies} from "next/headers";
@@ -31,10 +31,8 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
   const sortedBids = item.bids
     ? [...item.bids].sort((a, b) => b.amount - a.amount)
     : [];
-
   // Get the highest bid, if available
   const highestBid = sortedBids.length > 0 ? sortedBids[0] : null;
-
   // Now reverse the sorted array for display
   const sortedAndReversedBids = [...sortedBids].reverse();
   //${NotoSerif.className}

@@ -294,6 +294,7 @@ export async function bidOnListing(
     }
     const responseData: ListingResponse = await response.json();
     console.log("Bid placed successfully:", responseData);
+    revalidatePath("/");
     return responseData;
   } catch (error) {
     console.error("Error during bidding on listing:", error);

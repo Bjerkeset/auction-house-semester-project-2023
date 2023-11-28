@@ -10,14 +10,9 @@ export default async function AuthButton() {
   const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
   const username = usernameCookieObject ? usernameCookieObject.value : null;
 
-  if (
-    typeof accessToken === "string" &&
-    typeof username === "string" &&
-    accessToken &&
-    username
-  ) {
-    const response = await getUserProfile({accessToken, username});
-    if (response) {
+  if (accessToken && username) {
+    try {
+      const response = await getUserProfile({accessToken, username});
       return (
         <UserDropdownMenu
           profileImage={response.avatar}
@@ -25,6 +20,10 @@ export default async function AuthButton() {
           credits={response.credits}
         />
       );
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      // You can decide to return the SigninButton or an error message here
+      return <SigninButton />;
     }
   } else {
     return <SigninButton />;
