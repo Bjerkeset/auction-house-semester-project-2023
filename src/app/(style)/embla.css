@@ -1,0 +1,89 @@
+.embla {
+  overflow: hidden;
+  position: relative;
+  padding: 1.6rem;
+}
+
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  margin-left: -1rem; /* Adjust according to your needs */
+}
+
+.embla__slide {
+  flex: 0 0 100%; /* Each slide takes full width of the container */
+  position: relative;
+  padding-left: 1rem; /* Space between slides */
+}
+
+.embla__slide__img {
+  display: block;
+  width: 100%;
+  height: auto; /* Adjust height as needed */
+  object-fit: cover;
+}
+
+.embla__slide__number {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd; /* Simple background color for visibility */
+  color: #333; /* Text color */
+  line-height: 40px;
+  text-align: center;
+}
+
+.embla__button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ddd; /* Simple background color for visibility */
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.embla__button--prev {
+  left: 10px;
+}
+
+.embla__button--next {
+  right: 10px;
+}
+
+.embla__dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.embla__dot {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  background-color: #ddd; /* Simple background color for visibility */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.embla__dot--selected {
+  background-color: #333; /* Different color for selected dot */
+}

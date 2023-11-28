@@ -104,6 +104,9 @@ const filteredMarketItemsURL = `${baseURL}/auction/listings?_tag=15081995&_activ
 const createListingURL = `${baseURL}/auction/listings`;
 const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids=true&_active=true&_tag=15081995`;
 
+const tokenCookieObject = cookies().get("accessToken");
+const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+
 export async function registerUser(registerData: RegisterData): Promise<void> {
   console.log("registerURL>>>>>>>>>>>>>><", registerURL);
 
@@ -215,10 +218,10 @@ export async function getMarketItems(): Promise<MarketItem[]> {
 
     const responseData: MarketItem[] = await response.json();
 
-    // console.log(
-    //   "Market items with specified parameters retrieved successfully:",
-    //   responseData
-    // );
+    console.log(
+      "Market items with specified parameters retrieved successfully:",
+      responseData
+    );
     return responseData;
   } catch (error) {
     console.error("Error during fetching market items with parameters:", error);
@@ -264,9 +267,6 @@ export async function createListing(
     throw error;
   }
 }
-
-const tokenCookieObject = cookies().get("accessToken");
-const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
 
 export async function bidOnListing(
   listingId: string,

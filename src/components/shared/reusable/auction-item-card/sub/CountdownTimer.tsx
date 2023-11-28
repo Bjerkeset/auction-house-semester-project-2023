@@ -6,10 +6,10 @@ type CountdownTimerProps = {
 };
 
 type TimeLeft = {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
+  Days: number;
+  Hours: number;
+  Minutes: number;
+  Seconds: number;
 };
 
 export default function CountdownTimer({endsAt}: CountdownTimerProps) {
@@ -18,10 +18,10 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
 
     if (difference > 0) {
       return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
+        Days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        Hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        Minutes: Math.floor((difference / 1000 / 60) % 60),
+        Seconds: Math.floor((difference / 1000) % 60),
       };
     }
 
@@ -42,26 +42,34 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
     return () => clearTimeout(timer);
   });
 
-  // Checking if timeLeft is not null before rendering the countdown
+  // Function to get the label for a time unit
+  const getTimeLabel = (interval: string, value: number) => {
+    return value === 1 ? interval.slice(0, -1) : interval;
+  };
+
+  // Render countdown only if the time value is greater than 0
   return (
     <div>
       {timeLeft === null ? (
         <span>Time's up!</span>
       ) : (
-        <div className="flex gap-1">
-          {Object.entries(timeLeft).map(([interval, value]) => (
-            <div
-              key={interval}
-              className="flex p-2 w-1/4 flex-col justify-center items-center"
-            >
-              <time>
-                <span className="">{formatTime(value)}</span>
-                <span className="text-muted-foreground text-sm">
-                  {interval.charAt(0).toUpperCase() + interval.slice(1)}
-                </span>
-              </time>
-            </div>
-          ))}
+        <div className="flex gap-2">
+          {Object.entries(timeLeft).map(
+            ([interval, value]) =>
+              value > 0 && (
+                <div
+                  key={interval}
+                  className="flex p-2 w-1/4 flex-col justify-center items-center"
+                >
+                  <time className="flex items-center">
+                    <span className="px-1">{formatTime(value)}</span>
+                    <span className="text-muted-foreground text-sm">
+                      {getTimeLabel(interval, value)}
+                    </span>
+                  </time>
+                </div>
+              )
+          )}
         </div>
       )}
     </div>

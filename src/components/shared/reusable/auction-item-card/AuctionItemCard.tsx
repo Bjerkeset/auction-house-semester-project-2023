@@ -36,6 +36,7 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
         <div className="flex flex-col ">
           <div className="flex justify-between w-full">
             <h2 className="text-4xl font-bold">{item.title.toUpperCase()}</h2>
+
             <ProfileAvatar
               profileImage={item.seller?.avatar}
               username={item.seller?.name}
@@ -61,7 +62,7 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
           />
         </div>
       </div>
-      <div className="bg-slate-950">
+      <div className="w-1/2">
         <ImageCarousel item={item} />
       </div>
     </article>
