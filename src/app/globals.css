@@ -49,6 +49,10 @@
   }
 }
 
+new-bid {
+  @apply bg-green-400 text-white;
+}
+
 @layer base {
   * {
     @apply border-border;

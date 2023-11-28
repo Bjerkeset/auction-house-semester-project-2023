@@ -11,6 +11,7 @@ import BidSubmit from "./sub/BidSubmit";
 import AuctionItemDescription from "./sub/AuctionItemDescription";
 import DeleteButton from "./sub/DeleteButton";
 import {cookies} from "next/headers";
+import Tags from "./sub/Tags";
 
 type AuctionItemCardProps = {
   item: MarketItem;
@@ -37,6 +38,8 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
   // Now reverse the sorted array for display
   const sortedAndReversedBids = [...sortedBids].reverse();
   //${NotoSerif.className}
+
+  // console.log("item", item);
   return (
     <article
       className={` flex flex-col-reverse justify-end lg:flex-row-reverse p-4 gap-4 border w-[1000px] max-h-[600px]`}
@@ -59,6 +62,7 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
           </div>
           <div className="flex flex-col h-full gap-2">
             <AuctionItemDescription description={item.description} />
+            <Tags tags={item.tags} />
             <CreatedAtDate createdAt={item.created} />
           </div>
         </div>
