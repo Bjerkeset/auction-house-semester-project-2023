@@ -218,10 +218,10 @@ export async function getMarketItems(): Promise<MarketItem[]> {
 
     const responseData: MarketItem[] = await response.json();
 
-    console.log(
-      "Market items with specified parameters retrieved successfully:",
-      responseData
-    );
+    // console.log(
+    //   "Market items with specified parameters retrieved successfully:",
+    //   responseData
+    // );
     return responseData;
   } catch (error) {
     console.error("Error during fetching market items with parameters:", error);
@@ -297,6 +297,36 @@ export async function bidOnListing(
     return responseData;
   } catch (error) {
     console.error("Error during bidding on listing:", error);
+    throw error;
+  }
+}
+
+export async function deleteListing(
+  listingId: string
+  // accessToken: string
+): Promise<void> {
+  try {
+    const deleteListingURL = `${baseURL}/auction/listings/${listingId}`;
+
+    const response = await fetch(deleteListingURL, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    if (!response.ok) {
+      const errorResponse: ErrorResponse = await response.json();
+      const errorMessage =
+        errorResponse.errors?.[0]?.message || "Failed to delete listing";
+      throw new Error(errorMessage);
+    }
+
+    console.log("Listing deleted successfully");
+    revalidatePath("/");
+  } catch (error) {
+    console.error("Error during listing deletion:", error);
     throw error;
   }
 }

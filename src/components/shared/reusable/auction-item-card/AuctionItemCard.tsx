@@ -9,6 +9,8 @@ import {getTimeDifference} from "@/lib/utils";
 import CreatedAtDate from "./sub/CreatedAtDate";
 import BidSubmit from "./sub/BidSubmit";
 import AuctionItemDescription from "./sub/AuctionItemDescription";
+import DeleteButton from "./sub/DeleteButton";
+import {cookies} from "next/headers";
 
 type AuctionItemCardProps = {
   item: MarketItem;
@@ -17,6 +19,13 @@ type AuctionItemCardProps = {
 const NotoSerif = Noto_Serif_Display({subsets: ["latin"]});
 
 export default function AuctionItemCard({item}: AuctionItemCardProps) {
+  const tokenCookieObject = cookies().get("accessToken");
+  const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+  const usernameCookieObject = cookies().get("username");
+  const sessionUsername = usernameCookieObject
+    ? usernameCookieObject.value
+    : null;
+
   // Sort bids by amount in descending order
   const sortedBids = item.bids
     ? [...item.bids].sort((a, b) => b.amount - a.amount)
@@ -35,11 +44,17 @@ export default function AuctionItemCard({item}: AuctionItemCardProps) {
       <div className="flex flex-col w-full">
         <div className="flex flex-col ">
           <div className="flex justify-between w-full">
-            <h2 className="text-4xl font-bold">{item.title.toUpperCase()}</h2>
-
+            <h2 className="text-4xl mr-auto font-bold">
+              {item.title.toUpperCase()}
+            </h2>
             <ProfileAvatar
               profileImage={item.seller?.avatar}
               username={item.seller?.name}
+            />
+            <DeleteButton
+              sessionUsername={sessionUsername}
+              listingId={item.id}
+              ownerUsername={item.seller?.name}
             />
           </div>
           <div className="flex flex-col h-full gap-2">
