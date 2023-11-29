@@ -23,7 +23,7 @@ export default function ImageCarousel({item}: Props) {
           // width={500}
           src={image}
           alt={`image ${index + 1}`}
-          className="h-full w-full object-cover"
+          className="h-full w-auto object-cover"
         />
       ))}
     </Carousel>

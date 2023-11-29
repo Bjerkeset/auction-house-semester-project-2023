@@ -29,11 +29,11 @@ export function BidderProfileCard({
       >
         {/* <Button variant="link">{profilename}</Button> */}
         <Button variant="link" className="flex gap-2 items-center">
-          {/* <Avatar className="h-8 w-8">
+          <Avatar className="sm:hidden lg:block h-8 w-8">
             <AvatarImage src={avatar} />
             <AvatarFallback>WB</AvatarFallback>
-          </Avatar> */}
-          <p> {profilename} </p>
+          </Avatar>
+          <p className="hidden sm:block">{profilename}</p>
         </Button>
       </HoverCardTrigger>
       <HoverCardContent className="w-full">

@@ -7,7 +7,7 @@ export default async function MarketFeed() {
   return (
     <section className="flex flex-col gap-4">
       {marketItems.map((item) => (
-        <AuctionItemCard key={item.id} item={item} />
+        <AuctionItemCard key={item.id} item={item} isMinimized={false} />
       ))}
     </section>
   );

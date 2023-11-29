@@ -17,7 +17,9 @@ ProfileAvatarProps) {
         <AvatarImage className="" src={profileImage} />
         <AvatarFallback></AvatarFallback>
       </Avatar>
-      <p className=" text-muted-foreground text-base"> {username} </p>
+      <p className="md:flex hidden text-muted-foreground text-base">
+        {username}
+      </p>
     </div>
   );
 }

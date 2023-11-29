@@ -21,7 +21,7 @@ export default function Topbar() {
             HOME
           </Button>
         </Link>
-        <Link href="./" className="text-primary">
+        <Link href="./listings" className="text-primary">
           <Button variant="outline" className="border-primary w-24">
             AUCTION
           </Button>

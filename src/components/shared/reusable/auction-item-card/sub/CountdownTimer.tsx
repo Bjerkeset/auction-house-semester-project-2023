@@ -42,9 +42,19 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
     return () => clearTimeout(timer);
   });
 
-  // Function to get the label for a time unit
+  // Modified getTimeLabel function
   const getTimeLabel = (interval: string, value: number) => {
-    return value === 1 ? interval.slice(0, -1) : interval;
+    const singleLetterLabel = interval[0]; // First letter of the interval
+    const fullLabel = value === 1 ? interval.slice(0, -1) : interval;
+
+    return (
+      <>
+        {/* Full label for md screens and above */}
+        <span className="md:inline hidden">{fullLabel}</span>
+        {/* Single letter label for screens smaller than md */}
+        <span className="md:hidden">{singleLetterLabel}</span>
+      </>
+    );
   };
 
   // Render countdown only if the time value is greater than 0
@@ -62,7 +72,7 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
                   className="flex p-2 w-1/4 flex-col justify-center items-center"
                 >
                   <time className="flex items-center">
-                    <span className="px-1">{formatTime(value)}</span>
+                    <span className="px-1 ">{formatTime(value)}</span>
                     <span className="text-muted-foreground text-sm">
                       {getTimeLabel(interval, value)}
                     </span>

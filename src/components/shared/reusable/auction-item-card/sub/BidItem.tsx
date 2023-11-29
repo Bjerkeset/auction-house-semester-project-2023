@@ -29,18 +29,20 @@ export default function BidItem({bid, userProfile, isNew}: Props) {
 
   return (
     <div
-      className={`flex w-full justify-evenly items-center gap-2 ${
-        showNewStyle ? "new-bid bg-green-400" : ""
+      className={`flex w-full justify-center items-center gap-2 ${
+        showNewStyle ? " border-green-400" : ""
       }`}
     >
-      <BidderProfileCard
-        profilename={bid.bidderName}
-        avatar={userProfile?.avatar || ""}
-        email={userProfile?.email || ""}
-        credits={userProfile?.credits || 0}
-      />
-      <p className="text-green-400"> {bid.amount} $</p>
-      <p className="text-sm text-muted-foreground">
+      <div className="flex justify-center w-1/3">
+        <BidderProfileCard
+          profilename={bid.bidderName}
+          avatar={userProfile?.avatar || ""}
+          email={userProfile?.email || ""}
+          credits={userProfile?.credits || 0}
+        />
+      </div>
+      <p className="flex justify-center w-1/3 text-green-400">{bid.amount} $</p>
+      <p className="flex justify-center w-1/3 text-sm text-muted-foreground ">
         {bid.created ? getTimeDifference(bid.created) + " ago" : "N/A"}
       </p>
     </div>
