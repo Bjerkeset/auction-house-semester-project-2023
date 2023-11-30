@@ -21,7 +21,7 @@ export default function RootLayout({children}: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body className={`flex flex-col mx-auto max-w-7xl ${NotoSerif}`}>
+        <body className={`flex flex-col items-center ${NotoSerif}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

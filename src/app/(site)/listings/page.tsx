@@ -4,7 +4,7 @@ type Props = {};
 
 export default function page({}: Props) {
   return (
-    <main className="mt-[10vh]">
+    <main className="flex max-w-7xl flex-col items-center w-full mt-[10vh]">
       <ListingsFeedSection />
     </main>
   );

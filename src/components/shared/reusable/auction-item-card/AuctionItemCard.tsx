@@ -54,14 +54,7 @@ export default function AuctionItemCard({
         sessionUsername={sessionUsername}
         highestBid={highestBid}
         item={item}
-      >
-        <MaximizedAuctionCard
-          sortedAndReversedBids={sortedAndReversedBids}
-          highestBid={highestBid}
-          sessionUsername={sessionUsername}
-          item={item}
-        />
-      </MimimizedAuctionCard>
+      />
     );
   }
 
@@ -73,4 +66,13 @@ export default function AuctionItemCard({
       item={item}
     />
   );
+}
+{
+  /* <MaximizedAuctionCard
+          sortedAndReversedBids={sortedAndReversedBids}
+          highestBid={highestBid}
+          sessionUsername={sessionUsername}
+          item={item}
+        />
+      </MimimizedAuctionCard> */
 }

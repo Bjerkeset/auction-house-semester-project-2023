@@ -33,7 +33,7 @@ export default function BidItem({bid, userProfile, isNew}: Props) {
         showNewStyle ? " border-green-400" : ""
       }`}
     >
-      <div className="flex justify-center w-1/3">
+      <div className="flex pl-[5%] w-1/3">
         <BidderProfileCard
           profilename={bid.bidderName}
           avatar={userProfile?.avatar || ""}

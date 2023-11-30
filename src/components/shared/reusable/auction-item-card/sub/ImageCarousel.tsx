@@ -14,13 +14,14 @@ export default function ImageCarousel({item}: Props) {
 
   // Check if there are images in the array
   return (
-    <Carousel>
+    <Carousel className="overflow-hidden">
       {images.map((image, index) => (
         <img
           key={index}
           // fill={true}
-          // height={500}
+          // height={{height: "100%"}}
           // width={500}
+          style={{objectFit: "cover"}}
           src={image}
           alt={`image ${index + 1}`}
           className="h-full w-auto object-cover"
