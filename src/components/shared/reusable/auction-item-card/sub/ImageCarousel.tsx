@@ -11,10 +11,17 @@ type Props = {
 
 export default function ImageCarousel({item}: Props) {
   const images: string[] = item.media;
+  // Prevents card to expand when clicking the image.
+  const stopPropagation = (e: any) => {
+    e.stopPropagation();
+  };
 
   // Check if there are images in the array
   return (
-    <Carousel className="overflow-hidden">
+    <Carousel
+      onClick={stopPropagation}
+      className="overflow-hidden cursor-default "
+    >
       {images.map((image, index) => (
         <img
           key={index}

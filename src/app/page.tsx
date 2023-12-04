@@ -4,7 +4,7 @@ import HeroSection from "@/components/pages/home/hero/HeroSection";
 export default function Home() {
   return (
     <main className="flex max-w-7xl flex-col items-center">
-      {/* <HeroSection /> */}
+      <HeroSection />
       <MarketSection />
     </main>
   );

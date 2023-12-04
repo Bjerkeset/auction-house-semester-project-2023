@@ -49,7 +49,7 @@ Props) {
       <DialogTrigger>
         <Card className="flex flex-col justify-between h-full">
           <CardHeader className="">
-            <CardTitle className="">
+            <CardTitle>
               <ImageCarousel item={item} />
               <h2 className="text-2xl font-bold">{item.title.toUpperCase()}</h2>
             </CardTitle>

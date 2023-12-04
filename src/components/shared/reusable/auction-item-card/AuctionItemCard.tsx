@@ -48,7 +48,7 @@ export default function AuctionItemCard({
 
   if (isMinimized) {
     return (
-      //Pass as children to avoid switching MaximizedAuctionCard to client component.
+      //NOTE:May want to Pass as children to avoid switching MaximizedAuctionCard to client component.
       <MimimizedAuctionCard
         sortedAndReversedBids={sortedAndReversedBids}
         sessionUsername={sessionUsername}

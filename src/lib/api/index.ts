@@ -1,4 +1,5 @@
 "use server";
+import {MarketItem} from "@/constants/types";
 import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 
@@ -44,19 +45,20 @@ type GetUserProfileParams = {
   accessToken: string;
 };
 
-type MarketItem = {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  media: string[];
-  created: string;
-  updated: string;
-  endsAt: string;
-  _count: {
-    bids: number;
-  };
-};
+// type MarketItem = {
+//   id: string;
+//   title: string;
+//   description: string;
+//   tags: string[];
+//   media: string[];
+//   created: string;
+//   updated: string;
+//   endsAt: string;
+//   bids: [];
+//   _count: {
+//     bids: number;
+//   };
+// };
 
 type CreateListingData = {
   title: string;
@@ -106,6 +108,8 @@ const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids
 
 const tokenCookieObject = cookies().get("accessToken");
 const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+const usernameCookieObject = cookies().get("username");
+const username = usernameCookieObject ? usernameCookieObject.value : null;
 
 export async function registerUser(registerData: RegisterData): Promise<void> {
   console.log("registerURL>>>>>>>>>>>>>><", registerURL);
@@ -328,6 +332,66 @@ export async function deleteListing(
     revalidatePath("/");
   } catch (error) {
     console.error("Error during listing deletion:", error);
+    throw error;
+  }
+}
+
+export async function getAllListingsByProfile(): Promise<MarketItem[]> {
+  try {
+    const response = await fetch(
+      `${baseURL}/auction/profiles/${username}/listings?_seller=true&_bids=true`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse: ErrorResponse = await response.json();
+      const errorMessage =
+        errorResponse.errors?.[0]?.message ||
+        "Failed to retrieve listings by profile";
+      throw new Error(errorMessage);
+    }
+
+    const responseData: MarketItem[] = await response.json();
+    console.log("Listings by profile retrieved successfully:", responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error during fetching listings by profile:", error);
+    throw error;
+  }
+}
+
+export async function getAllBidsByProfile(): Promise<BidInfo[]> {
+  try {
+    const response = await fetch(
+      `${baseURL}/auction/profiles/${username}/bids`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorResponse: ErrorResponse = await response.json();
+      const errorMessage =
+        errorResponse.errors?.[0]?.message ||
+        "Failed to retrieve bids by profile";
+      throw new Error(errorMessage);
+    }
+
+    const responseData: BidInfo[] = await response.json();
+    // console.log("Bids by profile retrieved successfully:", responseData);
+    return responseData;
+  } catch (error) {
+    console.error("Error during fetching bids by profile:", error);
     throw error;
   }
 }

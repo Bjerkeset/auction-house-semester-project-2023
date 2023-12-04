@@ -48,6 +48,7 @@ export type MarketItem = {
   created: string;
   updated: string;
   endsAt: string;
+  isActive?: boolean;
   bids?: BidInfo[]; // Make bids optional
   seller?: {
     // Make seller optional
