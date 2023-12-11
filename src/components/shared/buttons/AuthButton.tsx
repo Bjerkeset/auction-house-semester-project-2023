@@ -12,7 +12,7 @@ export default async function AuthButton() {
 
   if (accessToken && username) {
     try {
-      const response = await getUserProfile({accessToken, username});
+      const response = await getUserProfile();
       return (
         <UserDropdownMenu
           profileImage={response.avatar}

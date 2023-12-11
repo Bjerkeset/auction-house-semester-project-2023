@@ -31,7 +31,7 @@ export default function ImageCarousel({item}: Props) {
           style={{objectFit: "cover"}}
           src={image}
           alt={`image ${index + 1}`}
-          className="h-full w-auto object-cover"
+          className="h-full w-auto object-cover "
         />
       ))}
     </Carousel>

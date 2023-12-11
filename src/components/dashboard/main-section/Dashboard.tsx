@@ -1,12 +1,12 @@
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {getAllListingsByProfile} from "@/lib/api";
 import History from "./history-tab/History";
-import {Separator} from "@/components/ui/separator";
 import Overview from "./overview-tab/Overview";
+import Settings from "./settings-tab/Settings";
+import {getUserProfile} from "@/lib/api";
 
-type Props = {};
+export default async function Dashboard() {
+  const user = await getUserProfile();
 
-export default async function Dashboard({}: Props) {
   return (
     <Tabs defaultValue="overview" className="w-full border">
       <TabsList className="justify-start w-full border-b ">
@@ -20,7 +20,9 @@ export default async function Dashboard({}: Props) {
       <TabsContent className="p-4" value="history">
         <History />
       </TabsContent>
-      <TabsContent value="settings">Change your Settings here.</TabsContent>
+      <TabsContent value="settings">
+        <Settings user={user} />
+      </TabsContent>
     </Tabs>
   );
 }

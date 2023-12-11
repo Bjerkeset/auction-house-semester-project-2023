@@ -24,6 +24,17 @@ export type ErrorResponse = {
   errors?: {message: string}[];
 };
 
+// export type UserProfileResponse = {
+//   name: string;
+//   email: string;
+//   avatar: string;
+//   credits: number;
+//   wins: string[];
+//   _count: {
+//     listings: number;
+//   };
+// };
+
 export type UserProfileResponse = {
   name: string;
   email: string;

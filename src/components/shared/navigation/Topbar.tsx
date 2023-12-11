@@ -17,7 +17,7 @@ export default function Topbar() {
         /> */}
         </div>
         <div className="flex gap-2 w-1/6 min-w-[1/6] ">
-          <Link href="./" className="text-primary">
+          <Link href="./main" className="text-primary">
             <Button variant="outline" className="border-primary w-24">
               HOME
             </Button>

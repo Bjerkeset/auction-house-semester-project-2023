@@ -1,5 +1,5 @@
 "use server";
-import {MarketItem} from "@/constants/types";
+import {MarketItem, UserProfileResponse} from "@/constants/types";
 import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 
@@ -29,16 +29,16 @@ type ErrorResponse = {
   errors?: {message: string}[];
 };
 
-type UserProfileResponse = {
-  name: string;
-  email: string;
-  avatar: string;
-  credits: number;
-  wins: string[];
-  _count: {
-    listings: number;
-  };
-};
+// type UserProfileResponse = {
+//   name: string;
+//   email: string;
+//   avatar: string;
+//   credits: number;
+//   wins: string[];
+//   _count: {
+//     listings: number;
+//   };
+// };
 
 type GetUserProfileParams = {
   username: string;
@@ -104,12 +104,14 @@ const userProfileURL = `${baseURL}/auction/profiles`;
 const marketItemsURL = `${baseURL}/auction/listings`;
 const filteredMarketItemsURL = `${baseURL}/auction/listings?_tag=15081995&_active=true`;
 const createListingURL = `${baseURL}/auction/listings`;
-const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids=true&_active=true&_tag=15081995`;
 
-const tokenCookieObject = cookies().get("accessToken");
-const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
-const usernameCookieObject = cookies().get("username");
-const username = usernameCookieObject ? usernameCookieObject.value : null;
+const getUsernameAndAccessToken = () => {
+  const tokenCookieObject = cookies().get("accessToken");
+  const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+  const usernameCookieObject = cookies().get("username");
+  const username = usernameCookieObject ? usernameCookieObject.value : null;
+  return {accessToken, username};
+};
 
 export async function registerUser(registerData: RegisterData): Promise<void> {
   console.log("registerURL>>>>>>>>>>>>>><", registerURL);
@@ -169,10 +171,13 @@ export async function loginUser(loginData: LoginData): Promise<LoginResponse> {
   }
 }
 
-export async function getUserProfile({
-  username,
-  accessToken,
-}: GetUserProfileParams): Promise<UserProfileResponse> {
+export async function getUserProfile(): Promise<UserProfileResponse> {
+  const {accessToken, username} = getUsernameAndAccessToken();
+
+  if (!username || !accessToken) {
+    throw new Error("Username or access token is missing");
+  }
+
   try {
     const response = await fetch(`${userProfileURL}/${username}`, {
       method: "GET",
@@ -204,9 +209,18 @@ export async function logoutUser() {
   revalidatePath("/");
 }
 
-export async function getMarketItems(): Promise<MarketItem[]> {
+const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids=true&_active=true`;
+
+export async function getMarketItems(
+  customURL?: string
+): Promise<MarketItem[]> {
+  // Split customURL at '&' and use the first part only
+  const cleanURL = customURL ? customURL.split("&")[0] : "15081995";
+
+  // Build URL based on cleanURL
+  const url = `${marketItemsWithParamsURL}&_tag=${cleanURL}`;
   try {
-    const response = await fetch(marketItemsWithParamsURL, {
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -221,11 +235,6 @@ export async function getMarketItems(): Promise<MarketItem[]> {
     }
 
     const responseData: MarketItem[] = await response.json();
-
-    // console.log(
-    //   "Market items with specified parameters retrieved successfully:",
-    //   responseData
-    // );
     return responseData;
   } catch (error) {
     console.error("Error during fetching market items with parameters:", error);
@@ -277,6 +286,10 @@ export async function bidOnListing(
   bidAmount: number
   // accessToken: string
 ): Promise<ListingResponse> {
+  const {accessToken, username} = getUsernameAndAccessToken();
+  if (!username || !accessToken) {
+    throw new Error("Username or access token is missing");
+  }
   try {
     const response = await fetch(
       `${baseURL}/auction/listings/${listingId}/bids`,
@@ -310,6 +323,11 @@ export async function deleteListing(
   listingId: string
   // accessToken: string
 ): Promise<void> {
+  const {accessToken, username} = getUsernameAndAccessToken();
+
+  if (!username || !accessToken) {
+    throw new Error("Username or access token is missing");
+  }
   try {
     const deleteListingURL = `${baseURL}/auction/listings/${listingId}`;
 
@@ -336,10 +354,25 @@ export async function deleteListing(
   }
 }
 
-export async function getAllListingsByProfile(): Promise<MarketItem[]> {
+export async function getAllListingsByProfile(
+  profileName?: string
+): Promise<MarketItem[]> {
+  const {accessToken, username} = getUsernameAndAccessToken();
+
+  if (!accessToken) {
+    throw new Error("Access token is missing");
+  }
+
+  // Use the provided profileName or fall back to the username from getUsernameAndAccessToken
+  const profileToQuery = profileName || username;
+
+  if (!profileToQuery) {
+    throw new Error("Profile name is missing");
+  }
+
   try {
     const response = await fetch(
-      `${baseURL}/auction/profiles/${username}/listings?_seller=true&_bids=true`,
+      `${baseURL}/auction/profiles/${profileToQuery}/listings?_seller=true&_bids=true&_active=true`,
       {
         method: "GET",
         headers: {
@@ -367,6 +400,11 @@ export async function getAllListingsByProfile(): Promise<MarketItem[]> {
 }
 
 export async function getAllBidsByProfile(): Promise<BidInfo[]> {
+  const {accessToken, username} = getUsernameAndAccessToken();
+
+  if (!username || !accessToken) {
+    throw new Error("Username or access token is missing");
+  }
   try {
     const response = await fetch(
       `${baseURL}/auction/profiles/${username}/bids`,
@@ -392,6 +430,39 @@ export async function getAllBidsByProfile(): Promise<BidInfo[]> {
     return responseData;
   } catch (error) {
     console.error("Error during fetching bids by profile:", error);
+    throw error;
+  }
+}
+
+export async function updateProfileAvatar(avatarUrl: string) {
+  const {accessToken, username} = getUsernameAndAccessToken();
+
+  if (!username || !accessToken) {
+    throw new Error("Username or access token is missing");
+  }
+  const updateAvatarURL = `${baseURL}/auction/profiles/${username}/media`;
+
+  try {
+    const response = await fetch(updateAvatarURL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({avatar: avatarUrl}),
+    });
+
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      const errorMessage =
+        errorResponse.errors?.[0]?.message || "Failed to update profile avatar";
+      throw new Error(errorMessage);
+    }
+    revalidatePath("/");
+
+    console.log("Profile avatar updated successfully");
+  } catch (error) {
+    console.error("Error during updating profile avatar:", error);
     throw error;
   }
 }

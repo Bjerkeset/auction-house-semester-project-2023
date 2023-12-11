@@ -27,7 +27,7 @@ export default function AuctionItemCard({
 }: AuctionItemCardProps) {
   const minimizedStyle = isMinimized ? "" : "";
 
-  console.log("isMinimized in AuctionItemCard", isMinimized);
+  // console.log("isMinimized in AuctionItemCard", isMinimized);
   // console.log("onToggleMinimized", onToggleMinimized);
   const tokenCookieObject = cookies().get("accessToken");
   const accessToken = tokenCookieObject ? tokenCookieObject.value : null;

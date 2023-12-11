@@ -21,7 +21,7 @@ export default async function AuctionBidsList({bids}: Props) {
   if (typeof accessToken === "string" && accessToken) {
     const profiles = await Promise.all(
       // Fetch the profile for each bidder to retrieve their avatar.
-      bids.map((bid) => getUserProfile({accessToken, username: bid.bidderName}))
+      bids.map((bid) => getUserProfile())
     );
 
     const reversedBids = bids.slice().reverse();
