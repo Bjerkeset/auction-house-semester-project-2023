@@ -61,7 +61,7 @@ export default function CountdownTimer({endsAt}: CountdownTimerProps) {
   return (
     <div>
       {timeLeft === null ? (
-        <span>Time's up!</span>
+        <span>Times up!</span>
       ) : (
         <div className="flex gap-2">
           {Object.entries(timeLeft).map(

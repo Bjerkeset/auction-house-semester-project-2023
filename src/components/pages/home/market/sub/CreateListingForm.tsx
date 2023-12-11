@@ -73,7 +73,7 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
     if (deadlineValue !== deadline) {
       setDeadline(deadlineValue);
     }
-  }, [deadlineValue]);
+  }, [deadlineValue, deadline]);
 
   const onSubmit = async (values: z.infer<typeof actionListingSchema>) => {
     console.log(values);
