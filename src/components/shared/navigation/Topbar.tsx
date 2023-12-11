@@ -4,30 +4,33 @@ import {Button} from "@/components/ui/button";
 import AuthButton from "../buttons/AuthButton";
 
 export default function Topbar() {
+  ///bg-yellow-400/5 border-yellow-400/20
   return (
-    <nav className="flex justify-between items-center m-1">
-      <div className="w-1/6">
-        {/* <Image
+    <nav className=" flex fixed top-0 w-full z-50 justify-center backdrop-blur-md border-b ">
+      <div className=" max-w-7xl flex w-full p-2 justify-between items-center">
+        <div className=" w-1/6 min-w-[1/6] ">
+          {/* <Image
           src="https://placehold.co/250x250"
           width={25}
           height={25}
           alt="Picture of the author"
         /> */}
-      </div>
-      <div className="flex gap-2">
-        <Button variant="outline" className="border-primary">
-          <Link href="./" className="text-primary">
-            HOME
+        </div>
+        <div className="flex gap-2 w-1/6 min-w-[1/6] ">
+          <Link href="./main" className="text-primary">
+            <Button variant="outline" className="border-primary w-24">
+              HOME
+            </Button>
           </Link>
-        </Button>
-        <Button variant="outline" className="border-primary">
-          <Link href="./" className="text-primary">
-            AUCTION
+          <Link href="./listings" className="text-primary">
+            <Button variant="outline" className="border-primary w-24">
+              AUCTION
+            </Button>
           </Link>
-        </Button>
-      </div>
-      <div className="flex">
-        <AuthButton />
+        </div>
+        <div className="flex w-1/6 min-w-max justify-end">
+          <AuthButton />
+        </div>
       </div>
     </nav>
   );

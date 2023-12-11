@@ -31,3 +31,13 @@ export const signinSchema = z.object({
     message: "Password must have at least 8 characters.",
   }),
 });
+export const actionListingSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  topics: z.array(
+    z.object({
+      id: z.string(),
+      text: z.string(),
+    })
+  ),
+});

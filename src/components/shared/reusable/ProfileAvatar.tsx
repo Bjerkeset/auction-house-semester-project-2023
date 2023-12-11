@@ -1,23 +1,25 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 type ProfileAvatarProps = {
-  profileImage: string;
-  username: string;
-  credits: number;
+  profileImage: string | undefined;
+  username: string | undefined;
+  // credits: number;
 };
 
 export default function ProfileAvatar({
   profileImage,
   username,
-  credits,
-}: ProfileAvatarProps) {
+}: // credits,
+ProfileAvatarProps) {
   return (
-    <div className="flex items-center gap-2 ">
-      <Avatar>
-        <AvatarImage src={profileImage} />
+    <div className="flex items-center gap-1 ">
+      <Avatar className="h-8 w-8">
+        <AvatarImage className="" src={profileImage} />
         <AvatarFallback></AvatarFallback>
       </Avatar>
-      <p className="font-bold text-base"> {username} </p>
+      <p className="md:flex hidden text-muted-foreground text-base">
+        {username}
+      </p>
     </div>
   );
 }

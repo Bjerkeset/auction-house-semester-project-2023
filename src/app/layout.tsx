@@ -4,8 +4,10 @@ import "./globals.css";
 import Topbar from "@/components/shared/navigation/Topbar";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import {Toaster} from "@/components/ui/toaster";
+import {Noto_Serif_Display} from "next/font/google";
 
 const inter = Inter({subsets: ["latin"]});
+const NotoSerif = Noto_Serif_Display({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +21,7 @@ export default function RootLayout({children}: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body>
+        <body className={`flex flex-col items-center ${NotoSerif}`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"

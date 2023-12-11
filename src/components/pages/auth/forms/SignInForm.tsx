@@ -23,10 +23,10 @@ import {
 } from "@/components/ui/card";
 import {signinSchema} from "@/lib/validation/auth";
 import {loginUser} from "@/lib/api";
-
+import {useRouter} from "next/navigation";
 export default function SignInForm() {
   const {toast} = useToast();
-
+  const router = useRouter();
   //Define The form default values and use zod validation schema.
   const form = useForm<z.infer<typeof signinSchema>>({
     resolver: zodResolver(signinSchema),
@@ -45,17 +45,17 @@ export default function SignInForm() {
         password: values.password,
       });
 
-      // Handle successful login, e.g., storing the access token, redirecting the user, etc.
-      console.log("Login successful:", response);
-      toast({
-        title: "Login Successful",
-        description: "You are now logged in.",
-      });
+      if (response) {
+        toast({
+          title: "Login Successful",
+          description: "You are now logged in.",
+        });
+        console.log("Login successful:", response);
+        router.push("/");
+      }
 
-      // You might want to redirect the user or perform other actions upon successful login
-      // For example: navigate('/dashboard');
+      // Redirect the user to the home page.
     } catch (error: any) {
-      // Handle login failure
       console.error("Login failed:", error);
       toast({
         title: "Login Failed",
