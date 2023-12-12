@@ -234,7 +234,7 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
             render={({field}) => (
               <FormItem>
                 <FormLabel className="flex justify-between">
-                  <p>Tags</p> <small>"optional"</small>
+                  <p>Tags</p> <small>optional</small>
                 </FormLabel>
                 <FormControl>
                   <TagInput
