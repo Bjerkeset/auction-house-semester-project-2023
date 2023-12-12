@@ -3,7 +3,7 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 type ProfileAvatarProps = {
   profileImage: string | undefined;
   username: string | undefined;
-  // credits: number;
+  credits?: number;
 };
 
 export default function ProfileAvatar({

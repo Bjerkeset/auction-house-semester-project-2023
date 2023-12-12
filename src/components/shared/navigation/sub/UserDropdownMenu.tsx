@@ -14,7 +14,7 @@ import LogoutButton from "../../buttons/LogoutButton";
 type UserDropdownMenuProps = {
   profileImage: string;
   username: string;
-  credits: number;
+  credits?: number;
 };
 export default function UserDropdownMenu({
   profileImage,
@@ -27,7 +27,7 @@ export default function UserDropdownMenu({
         <ProfileAvatar
           profileImage={profileImage}
           username={username}
-          credits={credits}
+          // credits={credits}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52">
