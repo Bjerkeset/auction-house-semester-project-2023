@@ -73,7 +73,7 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
     if (deadlineValue !== deadline) {
       setDeadline(deadlineValue);
     }
-  }, [deadlineValue]);
+  }, [deadlineValue, deadline]);
 
   const onSubmit = async (values: z.infer<typeof actionListingSchema>) => {
     console.log(values);
@@ -234,7 +234,7 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
             render={({field}) => (
               <FormItem>
                 <FormLabel className="flex justify-between">
-                  <p>Tags</p> <small>"optional"</small>
+                  <p>Tags</p> <small>optional</small>
                 </FormLabel>
                 <FormControl>
                   <TagInput

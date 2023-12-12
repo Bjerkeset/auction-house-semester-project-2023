@@ -26,12 +26,6 @@ export default function BidSubmitForm({
   sessionUsername,
   ownerUsername,
 }: Props) {
-  // If the sessionUsername is the same as the ownerUsername, don't render the form
-  // or if user is not logged in, don't render the form
-  if (sessionUsername === ownerUsername || !sessionUsername) {
-    return <div />;
-  }
-
   const defaultPrice = Math.round(currentPrice + currentPrice * 0.05);
 
   const formSchema = z
@@ -61,6 +55,12 @@ export default function BidSubmitForm({
       ownerUsername: ownerUsername ?? "",
     },
   });
+
+  // If the sessionUsername is the same as the ownerUsername, don't render the form
+  // or if user is not logged in, don't render the form
+  if (sessionUsername === ownerUsername || !sessionUsername) {
+    return <div />;
+  }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
