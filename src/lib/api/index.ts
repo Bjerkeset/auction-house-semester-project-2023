@@ -235,7 +235,6 @@ export async function getMarketItems(tag?: string): Promise<MarketItem[]> {
     }
 
     const responseData: MarketItem[] = await response.json();
-    console.log("Fetcheeeeeeeeeed");
     return responseData;
   } catch (error) {
     console.error("Error during fetching market items with parameters:", error);

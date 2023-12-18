@@ -36,19 +36,21 @@ export default function FilterByAuthor({sellers, accessToken}: Props) {
     setSelectedSeller(sellerFromUrl);
   }, [sellerFromUrl]);
 
-  // Add an "All" option
+  // Filter out undefined values and map to create seller options
   const sellerOptions = [
     {value: "All", label: "All"},
-    ...sellers.map((seller) => ({
-      value: seller,
-      label: seller.charAt(0).toUpperCase() + seller.slice(1),
-    })),
+    ...sellers
+      .filter((seller): seller is string => !!seller) // Filter out undefined values
+      .map((seller) => ({
+        value: seller,
+        label: seller.charAt(0).toUpperCase() + seller.slice(1),
+      })),
   ];
 
   const handleSelect = (value: string) => {
     setSelectedSeller(value);
     setOpen(false);
-    const newPath = value === "All" ? "/listings/" : `/listings/&${value}`;
+    const newPath = value === "All" ? "/listings/all" : `/listings/&${value}`;
     router.push(newPath);
   };
 

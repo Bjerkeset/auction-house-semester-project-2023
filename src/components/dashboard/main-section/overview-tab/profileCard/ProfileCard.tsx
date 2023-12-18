@@ -11,8 +11,6 @@ import {UserProfileResponse} from "@/constants/types";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 
 export default function ProfileCard({user}: {user: UserProfileResponse}) {
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>", user);
-
   // Determine the number of wins
   const winsCount = Array.isArray(user.wins) ? user.wins.length : 0;
 

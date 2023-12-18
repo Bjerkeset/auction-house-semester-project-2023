@@ -24,21 +24,18 @@ export default function Topbar() {
               HOME
             </Button>
           </Link>
-          <Link
-            href="/listings/15081995"
-            className="text-primary  hidden md:block"
-          >
-            <Button variant="outline" className="border-primary w-24">
+          <Link href="/listings/all" className="text-primary  hidden md:block">
+            <Button
+              data-cy="listings"
+              variant="outline"
+              className="border-primary w-24"
+            >
               LISTINGS
             </Button>
           </Link>
           {accessToken ? (
             <Link href="/dashboard" className="text-primary hidden md:block">
-              <Button
-                data-cy="listings"
-                variant="outline"
-                className="border-primary w-24"
-              >
+              <Button variant="outline" className="border-primary w-24">
                 DASHBOARD
               </Button>
             </Link>
