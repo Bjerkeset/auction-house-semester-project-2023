@@ -11,7 +11,7 @@ export default function SigninButton() {
   }
 
   return (
-    <Link className="ml-auto" href="./auth">
+    <Link className="ml-auto" href="/auth">
       <Button>Sign-in</Button>
     </Link>
   );

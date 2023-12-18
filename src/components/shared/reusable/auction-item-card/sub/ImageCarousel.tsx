@@ -3,8 +3,6 @@ import React from "react";
 import {MarketItem} from "@/constants/types";
 import {Carousel} from "@material-tailwind/react";
 import Image from "next/image";
-import {AspectRatio} from "@/components/ui/aspect-ratio";
-
 type Props = {
   item: MarketItem;
 };
@@ -20,18 +18,22 @@ export default function ImageCarousel({item}: Props) {
   return (
     <Carousel
       onClick={stopPropagation}
-      className="overflow-hidden cursor-default "
+      className="overflow-hidden cursor-default relative"
     >
       {images.map((image, index) => (
-        <img
+        <Image
           key={index}
           // fill={true}
           // height={{height: "100%"}}
           // width={500}
-          style={{objectFit: "cover"}}
+          // style={{objectFit: "cover"}}
           src={image}
           alt={`image ${index + 1}`}
-          className="h-full w-auto object-cover "
+          fill
+          sizes="max-width: 768px 100vw, 768px"
+          className="rounded-md object-cover "
+          layout="fill"
+          objectFit="cover"
         />
       ))}
     </Carousel>

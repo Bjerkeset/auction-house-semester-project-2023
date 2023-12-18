@@ -81,7 +81,7 @@ export default function SignInForm() {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="" {...field} />
+                    <Input type="email" {...field} />
                   </FormControl>
                   <FormDescription>
                     Enter your email address here.

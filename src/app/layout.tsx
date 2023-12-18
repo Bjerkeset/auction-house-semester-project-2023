@@ -5,6 +5,8 @@ import Topbar from "@/components/shared/navigation/Topbar";
 import {ThemeProvider} from "@/components/providers/theme-provider";
 import {Toaster} from "@/components/ui/toaster";
 import {Noto_Serif_Display} from "next/font/google";
+import FramerMotionProvider from "@/components/providers/FramerMotionProvider";
+import Footer from "@/components/shared/navigation/Footer";
 
 const inter = Inter({subsets: ["latin"]});
 const NotoSerif = Noto_Serif_Display({subsets: ["latin"]});
@@ -19,9 +21,11 @@ interface RootLayoutProps {
 export default function RootLayout({children}: RootLayoutProps) {
   return (
     <>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" className="scroll-smooth" suppressHydrationWarning>
         <head />
-        <body className={`flex flex-col items-center ${NotoSerif}`}>
+        <body
+          className={`flex flex-col items-center scroll-smooth ${NotoSerif}`}
+        >
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -30,6 +34,7 @@ export default function RootLayout({children}: RootLayoutProps) {
           >
             <Topbar />
             {children}
+            {/* <Footer /> */}
             <Toaster />
           </ThemeProvider>
         </body>

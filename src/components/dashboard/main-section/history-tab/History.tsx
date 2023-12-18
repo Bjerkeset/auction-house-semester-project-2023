@@ -12,7 +12,6 @@ export default async function History({}: Props) {
   data = data.map((item) => ({
     ...item,
     isActive: new Date(item.endsAt) > new Date(),
-    // ... other modifications (like highestBidAmount) if needed
   }));
 
   // Adding highestBidAmount property to each MarketItem
@@ -23,8 +22,6 @@ export default async function History({}: Props) {
         ? Math.max(...item.bids.map((bid: BidInfo) => bid.amount))
         : 0,
   }));
-
-  console.log("BiIIIIIIIIIIIIIIDs", data[2].bids);
 
   return (
     <div>

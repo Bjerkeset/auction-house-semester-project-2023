@@ -15,7 +15,7 @@ export default async function Dashboard() {
         <TabsTrigger value="settings">Settings</TabsTrigger>
       </TabsList>
       <TabsContent className="p-4" value="overview">
-        <Overview />
+        <Overview user={user} />
       </TabsContent>
       <TabsContent className="p-4" value="history">
         <History />

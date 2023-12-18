@@ -14,8 +14,8 @@ import Tags from "./sub/Tags";
 type Props = {
   item: MarketItem;
   sessionUsername: string | null;
-  highestBid: any;
-  sortedAndReversedBids: any;
+  highestBid?: any;
+  sortedAndReversedBids?: any;
 };
 
 export default function MaximizedAuctionCard({
