@@ -20,10 +20,6 @@ type Props = {
 };
 
 export default function FilterByAuthor({sellers, accessToken}: Props) {
-  if (!accessToken) {
-    // Api: Get listings by username needs accessToken for some reason...
-    return <div className="w-[200px]" />;
-  }
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
@@ -55,6 +51,11 @@ export default function FilterByAuthor({sellers, accessToken}: Props) {
     const newPath = value === "All" ? "/listings/" : `/listings/&${value}`;
     router.push(newPath);
   };
+
+  if (!accessToken) {
+    // Api: Get listings by username needs accessToken for some reason...
+    return <div className="w-[200px]" />;
+  }
 
   return (
     <div>
