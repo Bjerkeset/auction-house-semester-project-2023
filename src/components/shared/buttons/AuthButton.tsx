@@ -3,13 +3,12 @@ import {cookies} from "next/headers";
 import UserDropdownMenu from "../navigation/sub/UserDropdownMenu";
 import SigninButton from "./sub/SigninButton";
 
-export default async function AuthButton() {
-  const tokenCookieObject = cookies().get("accessToken");
-  const usernameCookieObject = cookies().get("username");
+type Props = {
+  accessToken?: string | null;
+  username?: string | null;
+};
 
-  const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
-  const username = usernameCookieObject ? usernameCookieObject.value : null;
-
+export default async function AuthButton({accessToken, username}: Props) {
   if (accessToken && username) {
     try {
       const response = await getUserProfile();
@@ -22,7 +21,6 @@ export default async function AuthButton() {
       );
     } catch (error) {
       console.error("Error fetching user profile:", error);
-      // You can decide to return the SigninButton or an error message here
       return <SigninButton />;
     }
   } else {

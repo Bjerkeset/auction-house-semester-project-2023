@@ -76,12 +76,6 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
   }, [deadlineValue, deadline]);
 
   const onSubmit = async (values: z.infer<typeof actionListingSchema>) => {
-    console.log(values);
-    console.log("deadline type:", typeof values.deadline);
-
-    // const tokenCookieObject = cookies().get("accessToken");
-    // const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
-
     if (typeof accessToken === "string" && accessToken) {
       try {
         // Format the data to match CreateListingData type

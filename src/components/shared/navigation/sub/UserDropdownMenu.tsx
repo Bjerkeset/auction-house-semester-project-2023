@@ -35,10 +35,12 @@ export default function UserDropdownMenu({
           Balance: <p className="text-base text-green-500">{credits} $</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href="/dashboard">Dashboard</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <Link className="md:hidden block" href="/dashboard">
+          <DropdownMenuItem>Dashboard</DropdownMenuItem>
+        </Link>
+        <Link className="md:hidden block" href="/listings/15081995">
+          <DropdownMenuItem>Listings</DropdownMenuItem>
+        </Link>
         <DropdownMenuItem>
           <LogoutButton />
         </DropdownMenuItem>

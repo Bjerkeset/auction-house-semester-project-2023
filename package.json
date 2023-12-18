@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "cypress:open": "cypress open",
     "start": "next start",
     "lint": "next lint"
   },
@@ -32,6 +33,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
+    "cypress": "^13.6.1",
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.0.0-rc14",
     "framer-motion": "^10.16.5",

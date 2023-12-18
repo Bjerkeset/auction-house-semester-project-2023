@@ -1,9 +1,10 @@
+import {UserProfileResponse} from "@/constants/types";
 import ProfileCard from "./profileCard/ProfileCard";
 
-export default function Overview() {
+export default function Overview({user}: {user: UserProfileResponse}) {
   return (
     <div>
-      <ProfileCard />
+      <ProfileCard user={user} />
     </div>
   );
 }

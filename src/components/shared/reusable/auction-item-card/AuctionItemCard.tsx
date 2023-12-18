@@ -12,8 +12,9 @@ import {cookies} from "next/headers";
 import Tags from "./sub/Tags";
 import BidSubmitForm from "./sub/BidSubmitForm";
 import {Minimize} from "lucide-react";
-import MimimizedAuctionCard from "@/components/pages/listings/feed/MimimizedAuctionCard";
+import MimimizedAuctionCard from "@/components/pages/listings/feed/sub/MimimizedAuctionCard";
 import MaximizedAuctionCard from "./MaximizedAuctionCard";
+import {getUsernameAndAccessToken} from "@/lib/api";
 
 type AuctionItemCardProps = {
   item: MarketItem;
@@ -27,14 +28,8 @@ export default function AuctionItemCard({
 }: AuctionItemCardProps) {
   const minimizedStyle = isMinimized ? "" : "";
 
-  // console.log("isMinimized in AuctionItemCard", isMinimized);
-  // console.log("onToggleMinimized", onToggleMinimized);
-  const tokenCookieObject = cookies().get("accessToken");
-  const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
-  const usernameCookieObject = cookies().get("username");
-  const sessionUsername = usernameCookieObject
-    ? usernameCookieObject.value
-    : null;
+  let {accessToken, username} = getUsernameAndAccessToken();
+  const sessionUsername = username;
 
   // Sort bids by amount in descending order
   const sortedBids = item.bids
@@ -44,7 +39,6 @@ export default function AuctionItemCard({
   const highestBid = sortedBids.length > 0 ? sortedBids[0] : null;
   // Now reverse the sorted array for display
   const sortedAndReversedBids = [...sortedBids].reverse();
-  //${NotoSerif.className}
 
   if (isMinimized) {
     return (

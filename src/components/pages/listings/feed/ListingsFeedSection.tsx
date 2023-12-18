@@ -1,63 +1,91 @@
+import React from "react";
 import AuctionItemCard from "@/components/shared/reusable/auction-item-card/AuctionItemCard";
-import {getMarketItems, getAllListingsByProfile} from "@/lib/api";
-import FilterByAuthor from "./FilterByAuthor";
-import FilterByTag from "@/components/pages/listings/feed/FilterByTag";
+import {
+  getMarketItems,
+  getAllListingsByProfile,
+  getUsernameAndAccessToken,
+} from "@/lib/api";
+import FilterByAuthor from "./sub/FilterByAuthor";
+import FilterByTag from "@/components/pages/listings/feed/sub/FilterByTag";
+import SearchInput from "./sub/SearchInput";
+import {MarketItem} from "@/constants/types";
 
 type Props = {
   SearchParamsUrl: string;
 };
 
 export default async function ListingsFeedSection({SearchParamsUrl}: Props) {
-  console.log("SearchParamsUrl", SearchParamsUrl);
-  // Decode the URL
+  const {accessToken} = getUsernameAndAccessToken();
+
+  // Fetch all market items for filter components
+  const allMarketItems = await getMarketItems();
+  let displayedMarketItems: MarketItem[] = [];
+
+  // Decode the URL for filter parameters
   const decodedUrl = decodeURIComponent(SearchParamsUrl);
-  console.log("Decoded URL:", decodedUrl);
+  let titleFilterValue: string | null = null;
+  let authorFilterValue: string | null = null;
+  let tagFilterValue: string | null = null;
+  const titleIndicator = "&&";
+  const pathSegments = decodedUrl.split("/");
 
-  let filteredMarketItems;
+  console.log("Path Segments:", pathSegments);
 
-  // Split the decoded URL directly by '&'
-  const params = decodedUrl ? decodedUrl.split("&") : [];
-  const tagParam = params[0];
-  const profileParam = params.length > 1 ? params[1] : null;
-  console.log("Tag Param:", tagParam, "Profile Param:", profileParam);
+  // Extract title, author, and tag from URL if present
+  const titleSegment = pathSegments.find((segment) =>
+    segment.startsWith(titleIndicator)
+  );
+  const authorSegment = pathSegments.find((segment) => segment.startsWith("&"));
+  if (!titleSegment && !authorSegment) {
+    tagFilterValue = pathSegments[1];
+  }
+  if (titleSegment) {
+    titleFilterValue = titleSegment
+      .substring(titleIndicator.length)
+      .replace(/-/g, " ");
+  }
+  if (authorSegment) {
+    authorFilterValue = authorSegment.substring(1);
+  }
 
-  if (tagParam && tagParam !== "main") {
-    filteredMarketItems = await getMarketItems(tagParam);
+  // Determine which filter to apply and fetch market items accordingly
+  if (titleFilterValue) {
+    displayedMarketItems = allMarketItems.filter(
+      (item) => item.title.toLowerCase() === titleFilterValue.toLowerCase()
+    );
+  } else if (authorFilterValue && authorFilterValue !== "All") {
+    displayedMarketItems = allMarketItems.filter(
+      (item) => item.seller && item.seller.name === authorFilterValue
+    );
+  } else if (tagFilterValue) {
+    console.log(`Fetching items for tag: ${tagFilterValue}`);
+    displayedMarketItems = await getMarketItems(
+      `/auction/listings?_tag=${tagFilterValue}`
+    );
+    console.log("Fetched Market Items:", displayedMarketItems);
   } else {
-    filteredMarketItems = await getMarketItems();
+    displayedMarketItems = [...allMarketItems];
   }
 
-  // Check for profile parameter
-  if (profileParam) {
-    filteredMarketItems = await getAllListingsByProfile(profileParam);
-    console.log("Filtered Market Items:", filteredMarketItems);
-  }
-
-  const marketItems = filteredMarketItems || (await getMarketItems());
-
-  // Combine all tags into a single array
-  const allTags = marketItems.reduce((acc: string[], item) => {
-    const uniqueTags = item.tags.filter((tag) => !acc.includes(tag));
-    return [...acc, ...uniqueTags];
-  }, [] as string[]);
-
-  // Combine all seller names into a single array
-  const allSellers = marketItems.reduce((acc: string[], item) => {
-    if (item.seller) {
-      const sellerName = item.seller.name;
-      if (!acc.includes(sellerName)) {
-        acc.push(sellerName);
-      }
-    }
-    return acc;
-  }, [] as string[]);
+  // Gather unique tags and sellers from all market items
+  const allTags = Array.from(
+    new Set(allMarketItems.flatMap((item) => item.tags))
+  );
+  const allSellers = Array.from(
+    new Set(
+      allMarketItems.map((item) => item.seller?.name).filter((name) => !!name)
+    )
+  );
 
   return (
     <div className="flex flex-col gap-4">
-      <FilterByTag tags={allTags} />
-      <FilterByAuthor sellers={allSellers} />
+      <div className="flex flex-col items-center sm:flex-row sm:justify-between">
+        <FilterByTag tags={allTags} />
+        <SearchInput titles={allTags} items={allMarketItems} />
+        <FilterByAuthor accessToken={accessToken} sellers={allSellers} />
+      </div>
       <section className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-        {marketItems.map((item) => (
+        {displayedMarketItems.map((item) => (
           <AuctionItemCard key={item.id} item={item} isMinimized={true} />
         ))}
       </section>

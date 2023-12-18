@@ -1,9 +1,10 @@
 import AuctionItemCard from "@/components/shared/reusable/auction-item-card/AuctionItemCard";
-import {createListing, getMarketItems} from "@/lib/api";
+import {MarketItem} from "@/constants/types";
 
-export default async function MarketFeed() {
-  const marketItems = await getMarketItems();
-
+type Props = {
+  marketItems: MarketItem[];
+};
+export default function MarketFeed({marketItems}: Props) {
   return (
     <section className="flex flex-col gap-4">
       {marketItems.map((item) => (

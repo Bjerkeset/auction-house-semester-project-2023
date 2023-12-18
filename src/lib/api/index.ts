@@ -105,7 +105,7 @@ const marketItemsURL = `${baseURL}/auction/listings`;
 const filteredMarketItemsURL = `${baseURL}/auction/listings?_tag=15081995&_active=true`;
 const createListingURL = `${baseURL}/auction/listings`;
 
-const getUsernameAndAccessToken = () => {
+export const getUsernameAndAccessToken = () => {
   const tokenCookieObject = cookies().get("accessToken");
   const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
   const usernameCookieObject = cookies().get("username");
@@ -153,6 +153,7 @@ export async function loginUser(loginData: LoginData): Promise<LoginResponse> {
 
     if (!response.ok) {
       const errorResponse: ErrorResponse = await response.json();
+      console.log(response);
       const errorMessage =
         errorResponse.errors?.[0]?.message || "Failed to login";
       throw new Error(errorMessage);
@@ -211,20 +212,19 @@ export async function logoutUser() {
 
 const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids=true&_active=true`;
 
-export async function getMarketItems(
-  customURL?: string
-): Promise<MarketItem[]> {
-  // Split customURL at '&' and use the first part only
-  const cleanURL = customURL ? customURL.split("&")[0] : "15081995";
+export async function getMarketItems(tag?: string): Promise<MarketItem[]> {
+  console.log("tag>>>>>>>>>>>>>>", tag);
+  // Use the tag directly if provided, else default to "15081995"
+  const tagParam = tag ? tag : "15081995";
+  console.log("tagParam>>>>>>>>>>>>>>", tagParam);
+  // Build URL with the tag parameter
+  const url = `${marketItemsWithParamsURL}&_tag=${tagParam}`;
+  console.log("Constructed URL for getMarketItems:", url); // Debugging log
 
-  // Build URL based on cleanURL
-  const url = `${marketItemsWithParamsURL}&_tag=${cleanURL}`;
   try {
     const response = await fetch(url, {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: {"Content-Type": "application/json"},
     });
 
     if (!response.ok) {
@@ -235,6 +235,7 @@ export async function getMarketItems(
     }
 
     const responseData: MarketItem[] = await response.json();
+    console.log("Fetcheeeeeeeeeed");
     return responseData;
   } catch (error) {
     console.error("Error during fetching market items with parameters:", error);

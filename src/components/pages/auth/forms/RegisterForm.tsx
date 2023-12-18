@@ -86,9 +86,9 @@ export default function RegisterForm() {
         description: "Registration and login successful.",
       });
 
-      // setTimeout(() => {
-      // router.push("/", {scroll: false});
-      // }, 1000);
+      setTimeout(() => {
+        router.push("/", {scroll: false});
+      }, 1000);
     } catch (error: any) {
       const errorMessage = error.message || "An error occurred";
       toast({
@@ -141,7 +141,7 @@ export default function RegisterForm() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="" {...field} />
+                      <Input type="email" placeholder="" {...field} />
                     </FormControl>
                     <FormDescription>Enter your email address.</FormDescription>
                     <FormMessage />
@@ -156,7 +156,7 @@ export default function RegisterForm() {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type="name" {...field} />
                     </FormControl>
                     <FormDescription>Enter your name.</FormDescription>
                     <FormMessage />

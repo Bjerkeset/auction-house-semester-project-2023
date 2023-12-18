@@ -61,3 +61,13 @@ new-bid {
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes moveSlideshow {
+  100% {
+    transform: translateX(-66.6666%);
+  }
+}
+
+.tech-slideshow:hover .mover-2 {
+  opacity: 1;
+}
