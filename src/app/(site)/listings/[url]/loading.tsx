@@ -8,7 +8,7 @@ export default function Loading() {
         {Array.from({length: 10}).map((_, index) => (
           <Skeleton
             key={index}
-            className="min-w-full w-full min-h-[550px] max-h-[550px]"
+            className="min-w-full w-full min-h-[500px] max-h-[550px]"
           />
         ))}
       </section>

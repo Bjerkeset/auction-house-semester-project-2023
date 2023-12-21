@@ -14,14 +14,11 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
 import {Input} from "@/components/ui/input";
-import {Label} from "@/components/ui/label";
-import Image from "next/image";
 import {useForm} from "react-hook-form";
 import {registerSchema} from "@/lib/validation/auth";
 import {z} from "zod";
@@ -30,12 +27,9 @@ import React from "react";
 import {cn} from "@/lib/utils";
 import {ArrowRight} from "lucide-react";
 import {motion} from "framer-motion";
-// import {Textarea} from "../ui/textarea";
 import {useToast} from "@/components/ui/use-toast";
 import {loginUser, registerUser} from "@/lib/api";
 import {useRouter} from "next/navigation";
-
-// import {signUpUser} from "@/lib/db";
 
 type Input = z.infer<typeof registerSchema>;
 
@@ -124,8 +118,6 @@ export default function RegisterForm() {
               className={cn("space-y-3 block", {
                 hidden: formStep !== 0,
               })}
-              // formStep == 0 => translateX == 0
-              // formStep == 1 => translateX == -100%
               animate={{
                 translateX: `-${formStep * 100}%`,
               }}
@@ -169,8 +161,6 @@ export default function RegisterForm() {
                 hidden: formStep !== 1, // This will apply 'hidden' class if formStep is not 1
               })}
               animate={{
-                // formStep == 0 => translateX == 100%
-                // formStep == 1 => translateX == 0
                 translateX: `${100 - formStep * 100}%`,
               }}
               // defult style prevents the animation from running on page load.

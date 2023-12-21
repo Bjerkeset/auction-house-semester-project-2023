@@ -1,10 +1,6 @@
 import React from "react";
 import AuctionItemCard from "@/components/shared/reusable/auction-item-card/AuctionItemCard";
-import {
-  getMarketItems,
-  getAllListingsByProfile,
-  getUsernameAndAccessToken,
-} from "@/lib/api";
+import {getMarketItems, getUsernameAndAccessToken} from "@/lib/api";
 import FilterByAuthor from "./sub/FilterByAuthor";
 import FilterByTag from "@/components/pages/listings/feed/sub/FilterByTag";
 import SearchInput from "./sub/SearchInput";
@@ -78,7 +74,7 @@ export default async function ListingsFeedSection({SearchParamsUrl}: Props) {
     new Set(
       allMarketItems
         .map((item) => item.seller?.name)
-        .filter((name): name is string => !!name) // Filter out undefined values
+        .filter((name): name is string => !!name)
     )
   );
 

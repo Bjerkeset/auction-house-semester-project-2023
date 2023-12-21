@@ -3,8 +3,6 @@ import {MarketItem, UserProfileResponse} from "@/constants/types";
 import {revalidatePath} from "next/cache";
 import {cookies} from "next/headers";
 
-// "@/constants/types/index.ts"
-
 type RegisterData = {
   name: string;
   email: string;
@@ -29,43 +27,17 @@ type ErrorResponse = {
   errors?: {message: string}[];
 };
 
-// type UserProfileResponse = {
-//   name: string;
-//   email: string;
-//   avatar: string;
-//   credits: number;
-//   wins: string[];
-//   _count: {
-//     listings: number;
-//   };
-// };
-
 type GetUserProfileParams = {
   username: string;
   accessToken: string;
 };
-
-// type MarketItem = {
-//   id: string;
-//   title: string;
-//   description: string;
-//   tags: string[];
-//   media: string[];
-//   created: string;
-//   updated: string;
-//   endsAt: string;
-//   bids: [];
-//   _count: {
-//     bids: number;
-//   };
-// };
 
 type CreateListingData = {
   title: string;
   description?: string;
   tags?: string[];
   media?: string[];
-  endsAt: string; // Instance of new Date().toISOString()
+  endsAt: string;
 };
 
 type SellerInfo = {
@@ -93,8 +65,8 @@ type ListingResponse = {
   _count: {
     bids: number;
   };
-  seller?: SellerInfo; // Optional seller information
-  bids?: BidInfo[]; // Optional array of bids
+  seller?: SellerInfo;
+  bids?: BidInfo[];
 };
 
 const baseURL = "https://api.noroff.dev/api/v1";
@@ -213,13 +185,10 @@ export async function logoutUser() {
 const marketItemsWithParamsURL = `${baseURL}/auction/listings?_seller=true&_bids=true&_active=true`;
 
 export async function getMarketItems(tag?: string): Promise<MarketItem[]> {
-  console.log("tag>>>>>>>>>>>>>>", tag);
   // Use the tag directly if provided, else default to "15081995"
   const tagParam = tag ? tag : "15081995";
-  console.log("tagParam>>>>>>>>>>>>>>", tagParam);
   // Build URL with the tag parameter
   const url = `${marketItemsWithParamsURL}&_tag=${tagParam}`;
-  console.log("Constructed URL for getMarketItems:", url); // Debugging log
 
   try {
     const response = await fetch(url, {

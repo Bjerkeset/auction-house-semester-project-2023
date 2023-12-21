@@ -4,9 +4,7 @@ import {getAllListingsByProfile} from "@/lib/api";
 import {columns} from "./sub/columns";
 import {BidInfo} from "@/constants/types";
 
-type Props = {};
-
-export default async function History({}: Props) {
+export default async function History() {
   let data = await getAllListingsByProfile();
 
   data = data.map((item) => ({

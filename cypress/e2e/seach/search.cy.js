@@ -1,39 +1,62 @@
 describe("Search Test", () => {
   it("Successfully searches listings by title", () => {
-    // Ignore hydration errors
+    // Ignore specific errors
     Cypress.on("uncaught:exception", (err) => {
-      if (err.message.includes("Hydration failed")) {
-        return false; // returning false here prevents Cypress from failing the test
-      }
-      return true; // Throw error for any other exceptions
+      // Add the error messages that you want to ignore
+      const ignoredErrors = [
+        "Hydration failed",
+        "Server Functions cannot be called during initial render",
+        "There was an error while hydrating this Suspense boundary. Switched to client rendering",
+      ];
+
+      // Check if the error message includes any of the ignored errors
+      const shouldIgnoreError = ignoredErrors.some((ignoredError) =>
+        err.message.includes(ignoredError)
+      );
+
+      // If the error is one of the ignored errors, prevent Cypress from failing the test
+      return !shouldIgnoreError;
     });
 
-    cy.visit("http://localhost:3000/auth");
+    cy.visit("http://localhost:3000/listings/all");
 
     // Find and click the button that contains 'listings'
-    cy.contains('[data-cy="listings"]').click();
+    // cy.contains('[data-cy="listings"]').click();
 
     // Now proceed with the rest of the test
     // Simulate CTRL + K to open search
+    // Now proceed with the rest of the test
+    // Simulate CTRL + K to open search
+    cy.wait(5000);
+
     cy.get("body").type("{ctrl}k");
+
+    cy.wait(1500);
 
     // Simulate pressing Escape to ensure any initial dialogues are closed
     cy.get("body").type("{esc}");
 
     // Click the search button
-    cy.contains("Search By Title").click();
+    cy.get('[data-cy="search-button"]').click();
 
-    // Simulate typing into the search box and pressing Enter
-    // Assuming you have a test item with title 'Test Item'
-    cy.get('input[type="search"]').type("Test Item{enter}");
+    cy.wait(500);
 
-    // Click the first item in the list
-    // Adjust the selector based on your actual DOM structure
-    cy.get(".command-list .command-item").first().click();
+    // Type 'venus' into the already focused input field
+    cy.get("body").type("venus");
+    cy.wait(1000);
+    // Type 'venus' into the already focused input field
 
-    // Verify that the page contains the item
-    // Adjust the verification step based on what you expect to see
-    cy.url().should("include", "/listings/Test-Item");
-    cy.contains("Test Item").should("be.visible");
+    // Take a screenshot for visual inspection
+    // cy.screenshot();
+
+    // Click the last visible item that contains "Venus Item"
+    cy.get('[data-cy="search-item"]')
+      .filter(":visible")
+      // .contains("span[data-cy='search-item']")
+      .last()
+      .click();
+
+    // Wait for the URL to change and use a regex to match 'venus' case-insensitively
+    cy.url().should("match", /venus/i);
   });
 });

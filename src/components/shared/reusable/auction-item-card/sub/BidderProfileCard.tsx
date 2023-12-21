@@ -1,5 +1,3 @@
-// import {CalendarIcon} from "@radix-ui/react-icons";
-
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {
@@ -27,7 +25,6 @@ export function BidderProfileCard({
         asChild
         className=" flex items-center justify-center text-center"
       >
-        {/* <Button variant="link">{profilename}</Button> */}
         <Button variant="link" className="flex gap-2 items-center">
           <Avatar className="sm:hidden lg:block h-8 w-8">
             <AvatarImage src={avatar} />
@@ -46,7 +43,6 @@ export function BidderProfileCard({
             <h4 className="text-sm font-semibold">{profilename}</h4>
             <p className="text-sm">{email}</p>
             <div className="flex items-center pt-2">
-              {/* <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "} */}
               <span className="text-xs text-muted-foreground">
                 Balance: {credits} $
               </span>

@@ -14,16 +14,6 @@ import {
 import {ArrowUpDown, MoreHorizontal} from "lucide-react";
 import {Checkbox} from "@/components/ui/checkbox";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-
-const sortActive: SortingFn<MarketItem> = (rowA, rowB) => {
-  const isActiveA = rowA.original.isActive ? 1 : 0;
-  const isActiveB = rowB.original.isActive ? 1 : 0;
-
-  // Assuming true for ascending, false for descending
-  return isActiveA > isActiveB ? -1 : isActiveA < isActiveB ? 1 : 0;
-};
 export const columns: ColumnDef<MarketItem>[] = [
   {
     accessorKey: "title",
@@ -98,7 +88,7 @@ export const columns: ColumnDef<MarketItem>[] = [
     accessorKey: "isActive",
     header: () => "Active",
     cell: ({row}) => (row.getValue("isActive") ? "Active" : "Passed"),
-    enableColumnFilter: false, // Disable column filter if not needed
+    enableColumnFilter: false,
   },
 
   {

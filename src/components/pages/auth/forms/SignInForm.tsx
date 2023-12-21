@@ -27,7 +27,7 @@ import {useRouter} from "next/navigation";
 export default function SignInForm() {
   const {toast} = useToast();
   const router = useRouter();
-  //Define The form default values and use zod validation schema.
+
   const form = useForm<z.infer<typeof signinSchema>>({
     resolver: zodResolver(signinSchema),
     defaultValues: {
@@ -53,8 +53,6 @@ export default function SignInForm() {
         console.log("Login successful:", response);
         router.push("/");
       }
-
-      // Redirect the user to the home page.
     } catch (error: any) {
       console.error("Login failed:", error);
       toast({

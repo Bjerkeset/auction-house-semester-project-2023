@@ -59,7 +59,6 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
     },
   });
 
-  // const [date, setDate] = React.useState(new Date(2023, 0, 1, 12, 0));
   const [deadline, setDeadline] = React.useState(new Date());
   const {fields, append, remove} = useFieldArray({
     name: "urls",
@@ -87,7 +86,7 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
             .map((url) => url.value)
             .filter(
               (value) => typeof value === "string" && value.trim() !== ""
-            ) as string[], // Type assertion here
+            ) as string[],
           endsAt: values.deadline.toISOString(),
         };
 
@@ -95,7 +94,6 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
         const response = await createListing(formattedData, accessToken);
         console.log("Listing created:", response);
 
-        // Handle success (e.g., show success message, redirect, etc.)
         toast({
           title: "Listing Created",
           description: "Your listing has been successfully created.",
@@ -109,7 +107,6 @@ export function CreateListingForm({accessToken}: {accessToken: string | null}) {
         });
       }
     } else {
-      // Handle case when accessToken is not available
       console.error("Access token not found");
       toast({
         title: "Error",
