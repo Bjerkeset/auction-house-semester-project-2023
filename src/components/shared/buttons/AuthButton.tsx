@@ -1,5 +1,4 @@
 import {getUserProfile} from "@/lib/api";
-import {cookies} from "next/headers";
 import UserDropdownMenu from "../navigation/sub/UserDropdownMenu";
 import SigninButton from "./sub/SigninButton";
 

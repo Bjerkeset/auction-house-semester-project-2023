@@ -10,9 +10,3 @@ export default function Heading() {
     </div>
   );
 }
-
-// "Art in Motion: Buy, Sell, and Revel in Fine Art"
-// "Where Art Enthusiasts Bid and Sellers Shine"
-// "Your Canvas for Buying and Selling Masterpieces"
-// "Bridge Art Worlds: Bid, Sell, and Discover"
-// "A Marketplace of Wonders: Sell and Bid on Exquisite Art"

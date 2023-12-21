@@ -1,5 +1,4 @@
 import {getUserProfile, getUsernameAndAccessToken} from "@/lib/api";
-import {cookies} from "next/headers";
 import {ScrollArea} from "@/components/ui/scroll-area";
 import BidItem from "./BidItem";
 
@@ -15,9 +14,6 @@ type Props = {
 };
 
 export default async function AuctionBidsList({bids}: Props) {
-  // const tokenCookieObject = cookies().get("accessToken");
-  // const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
-
   let {accessToken, username} = getUsernameAndAccessToken();
   const sessionUsername = username;
 

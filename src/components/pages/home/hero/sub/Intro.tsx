@@ -1,6 +1,5 @@
 import DownButton from "./DownButton";
 
-// Assuming the structure of a bid is something like { title: string, price: number }
 type Bid = {
   title: string;
   price: number;

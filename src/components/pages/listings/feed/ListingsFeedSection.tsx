@@ -1,10 +1,6 @@
 import React from "react";
 import AuctionItemCard from "@/components/shared/reusable/auction-item-card/AuctionItemCard";
-import {
-  getMarketItems,
-  getAllListingsByProfile,
-  getUsernameAndAccessToken,
-} from "@/lib/api";
+import {getMarketItems, getUsernameAndAccessToken} from "@/lib/api";
 import FilterByAuthor from "./sub/FilterByAuthor";
 import FilterByTag from "@/components/pages/listings/feed/sub/FilterByTag";
 import SearchInput from "./sub/SearchInput";
@@ -14,6 +10,8 @@ type Props = {
   SearchParamsUrl: string;
 };
 
+// This component is used to filter the listings by tag, author, or title.
+// It fetches the market items from the API and updates state using the URL.
 export default async function ListingsFeedSection({SearchParamsUrl}: Props) {
   const {accessToken} = getUsernameAndAccessToken();
 
@@ -29,41 +27,41 @@ export default async function ListingsFeedSection({SearchParamsUrl}: Props) {
   const titleIndicator = "&&";
   const pathSegments = decodedUrl.split("/");
 
-  console.log("Path Segments:", pathSegments);
-
-  // Extract title, author, and tag from URL if present
+  const authorSegment = pathSegments.find((segment) => segment.startsWith("&"));
   const titleSegment = pathSegments.find((segment) =>
     segment.startsWith(titleIndicator)
   );
-  const authorSegment = pathSegments.find((segment) => segment.startsWith("&"));
+
   if (!titleSegment && !authorSegment) {
-    tagFilterValue = pathSegments[1];
+    tagFilterValue = pathSegments[pathSegments.length - 1];
   }
+
   if (titleSegment) {
     titleFilterValue = titleSegment
       .substring(titleIndicator.length)
       .replace(/-/g, " ");
   }
+
   if (authorSegment) {
     authorFilterValue = authorSegment.substring(1);
   }
 
   // Determine which filter to apply and fetch market items accordingly
-  if (titleFilterValue) {
+  if (titleFilterValue && titleFilterValue !== "all") {
     displayedMarketItems = allMarketItems.filter(
-      (item) => item.title.toLowerCase() === titleFilterValue.toLowerCase()
+      (item) =>
+        titleFilterValue &&
+        item.title.toLowerCase() === titleFilterValue.toLowerCase()
     );
-  } else if (authorFilterValue && authorFilterValue !== "All") {
+  } else if (authorFilterValue && authorFilterValue !== "all") {
     displayedMarketItems = allMarketItems.filter(
       (item) => item.seller && item.seller.name === authorFilterValue
     );
-  } else if (tagFilterValue) {
-    console.log(`Fetching items for tag: ${tagFilterValue}`);
-    displayedMarketItems = await getMarketItems(
-      `/auction/listings?_tag=${tagFilterValue}`
-    );
-    console.log("Fetched Market Items:", displayedMarketItems);
+  } else if (tagFilterValue && tagFilterValue !== "all") {
+    // Fetch market items for the selected tag
+    displayedMarketItems = await getMarketItems(tagFilterValue);
   } else {
+    // No filter or "All" filter is applied
     displayedMarketItems = [...allMarketItems];
   }
 
@@ -71,9 +69,12 @@ export default async function ListingsFeedSection({SearchParamsUrl}: Props) {
   const allTags = Array.from(
     new Set(allMarketItems.flatMap((item) => item.tags))
   );
+
   const allSellers = Array.from(
     new Set(
-      allMarketItems.map((item) => item.seller?.name).filter((name) => !!name)
+      allMarketItems
+        .map((item) => item.seller?.name)
+        .filter((name): name is string => !!name)
     )
   );
 

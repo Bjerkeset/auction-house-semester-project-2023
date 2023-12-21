@@ -6,7 +6,6 @@ import {ThemeProvider} from "@/components/providers/theme-provider";
 import {Toaster} from "@/components/ui/toaster";
 import {Noto_Serif_Display} from "next/font/google";
 import FramerMotionProvider from "@/components/providers/FramerMotionProvider";
-import Footer from "@/components/shared/navigation/Footer";
 
 const inter = Inter({subsets: ["latin"]});
 const NotoSerif = Noto_Serif_Display({subsets: ["latin"]});
@@ -33,8 +32,7 @@ export default function RootLayout({children}: RootLayoutProps) {
             disableTransitionOnChange
           >
             <Topbar />
-            {children}
-            {/* <Footer /> */}
+            <FramerMotionProvider>{children}</FramerMotionProvider>
             <Toaster />
           </ThemeProvider>
         </body>

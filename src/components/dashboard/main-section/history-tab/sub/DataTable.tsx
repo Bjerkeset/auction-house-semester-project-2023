@@ -1,5 +1,4 @@
 "use client";
-
 import {
   ColumnDef,
   flexRender,
@@ -48,6 +47,7 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
 
+  console.log("DataTable.tsx: data>>>: ", data);
   const table = useReactTable({
     data,
     columns,
@@ -105,7 +105,6 @@ export function DataTable<TData, TValue>({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-
         <div className="rounded-md border">
           <Table>
             <TableHeader>

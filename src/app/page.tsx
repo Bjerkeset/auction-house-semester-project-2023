@@ -6,11 +6,9 @@ import {getMarketItems} from "@/lib/api";
 export default async function Home() {
   const marketItems = await getMarketItems();
   return (
-    <FramerMotionProvider>
-      <main className="flex max-w-7xl flex-col items-center">
-        <HeroSection marketItems={marketItems} />
-        <MarketSection marketItems={marketItems} />
-      </main>
-    </FramerMotionProvider>
+    <main className="flex max-w-7xl flex-col items-center">
+      <HeroSection marketItems={marketItems} />
+      <MarketSection marketItems={marketItems} />
+    </main>
   );
 }

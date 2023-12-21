@@ -1,4 +1,3 @@
-import {Button} from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,11 +23,7 @@ export default function UserDropdownMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="p-1">
-        <ProfileAvatar
-          profileImage={profileImage}
-          username={username}
-          // credits={credits}
-        />
+        <ProfileAvatar profileImage={profileImage} username={username} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-52">
         <DropdownMenuLabel className="flex justify-between items-center text-center">

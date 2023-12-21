@@ -1,5 +1,3 @@
-import {createListing} from "@/lib/api";
-import {cookies} from "next/headers";
 import {
   Dialog,
   DialogContent,
@@ -10,23 +8,19 @@ import {
 } from "@/components/ui/dialog";
 import {CreateListingForm} from "./CreateListingForm";
 import {Button} from "@/components/ui/button";
+import {getUsernameAndAccessToken} from "@/lib/api";
 
 export default async function CreateListing() {
-  const mockData = {
-    title: "Vintage Lamp",
-    description: "A beautiful vintage lamp in excellent condition.",
-    tags: ["vintage", "lamp", "home decor"],
-    media: ["https://placehold.co/400"],
-    endsAt: new Date().toISOString(), // This sets a current date, you might want to adjust it
-  };
+  const {username, accessToken} = getUsernameAndAccessToken();
 
-  const tokenCookieObject = cookies().get("accessToken");
-  const accessToken = tokenCookieObject ? tokenCookieObject.value : null;
+  if (!username || !accessToken) {
+    return null;
+  }
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button>Auction Artwork Now!</Button>
+      <DialogTrigger className="w-full">
+        <Button className=" my-2 w-full">Auction Artwork Now!</Button>
       </DialogTrigger>
       <DialogContent className="lg:max-w-screen-md overflow-y-scroll max-h-screen">
         <DialogHeader>
