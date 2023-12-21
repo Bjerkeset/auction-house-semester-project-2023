@@ -1,10 +1,11 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Built with:
-
 [Shadcn](https://ui.shadcn.com/) A collection of re-usable components.
+
 [React Hook Form](https://react-hook-form.com/) Performant and extensible forms with zod validation.
+
 [Framer Motion](https://www.framer.com/motion/) Animation library for React.
+
 [Cypress](https://www.cypress.io/) Modern front-end testing tool.
 
 ## Getting Started
