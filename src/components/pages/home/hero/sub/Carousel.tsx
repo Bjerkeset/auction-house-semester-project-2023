@@ -59,9 +59,9 @@ export default function Carousel({images}: CarouselProps) {
                 src={image.url}
                 alt={image.title}
                 fill
-                className="rounded-md object-cover"
-                layout="fill"
-                objectFit="cover"
+                className="rounded-md object-cover fill"
+                // layout="fill"
+                // objectFit="cover"
               />
             </div>
           </div>

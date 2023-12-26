@@ -29,9 +29,9 @@ export default function ImageCarousel({item}: Props) {
           alt={`image ${index + 1}`}
           fill
           sizes="max-width: 768px 100vw, 768px"
-          className="rounded-md object-cover "
-          layout="fill"
-          objectFit="cover"
+          className="rounded-md object-cover fill"
+          // layout=""
+          // objectFit="cover"
         />
       ))}
     </Carousel>
