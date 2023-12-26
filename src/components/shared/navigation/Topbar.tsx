@@ -3,6 +3,7 @@ import Image from "next/image";
 import {Button} from "@/components/ui/button";
 import AuthButton from "../buttons/AuthButton";
 import {getUsernameAndAccessToken} from "@/lib/api";
+import logo from "../../../../public/logo414.png";
 
 export default function Topbar() {
   const {username, accessToken} = getUsernameAndAccessToken();
@@ -12,7 +13,7 @@ export default function Topbar() {
       <div className=" max-w-7xl flex w-full p-2 justify-between items-center">
         <div className=" w-1/6 min-w-max  ">
           <Image
-            src="https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/qp8rxi2jae4uinry2dv7"
+            src={logo}
             width={50}
             height={20}
             alt="Picture of the author"
